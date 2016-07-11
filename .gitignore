@@ -30,6 +30,9 @@ plugins/
 
 # Job state files.
 builds/
+lastStable
+lastSuccessful
+nextBuildNumber
 
 # Updates.
 updates/
