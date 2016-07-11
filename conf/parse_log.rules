@@ -1,0 +1,13 @@
+# This is a rules file for Log Parser Plugin for Jenkins CI.
+# See: https://wiki.jenkins-ci.org/display/JENKINS/Log+Parser+Plugin
+
+# Match line starting with 'error', case-insensitive.
+error /(?i) error[: ]/
+error / exit 1$/
+
+# List of warning rules.
+warning /(?i) warning[: ]/
+warning /initialization failed/
+
+# Create a quick access link to lines in the report containing 'info'.
+info /(?i) info[: ]/
