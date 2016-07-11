@@ -37,6 +37,7 @@ updates/
 # Except git and ssh config files.
 !.git*
 !.ssh/
+!.aws/config
 
 # User content.
 userContent/
