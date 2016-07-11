@@ -1,3 +1,5 @@
 [user]
 	name = Jenkins
 	email = EA31337-Tester@users.noreply.github.com
+[push]
+	default = simple
