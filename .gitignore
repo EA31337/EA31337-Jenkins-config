@@ -1,10 +1,5 @@
 # Git untracked files to ignore.
 
-# Site-wide configuration files.
-*.xml
-# Except root configuration.
-!config.xml
-
 # Cache.
 .cache/
 
@@ -24,7 +19,6 @@ id_rsa
 
 # Plugins.
 plugins/
-!hudson.plugins.*.xml
 
 # State files.
 *.state

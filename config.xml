@@ -107,10 +107,48 @@
   </views>
   <primaryView>All</primaryView>
   <slaveAgentPort>-1</slaveAgentPort>
-  <label></label>
+  <label>Hetzner</label>
   <crumbIssuer class="hudson.security.csrf.DefaultCrumbIssuer">
     <excludeClientIPFromCrumb>false</excludeClientIPFromCrumb>
   </crumbIssuer>
-  <nodeProperties/>
+  <nodeProperties>
+    <hudson.slaves.EnvironmentVariablesNodeProperty>
+      <envVars serialization="custom">
+        <unserializable-parents/>
+        <tree-map>
+          <default>
+            <comparator class="hudson.util.CaseInsensitiveComparator"/>
+          </default>
+          <int>13</int>
+          <string>EA_VER</string>
+          <string>v1.069</string>
+          <string>GIT_ARGS</string>
+          <string>--author=&quot;EA31337-Tester &lt;EA31337-Tester@users.noreply.github.com&gt;&quot;</string>
+          <string>GITHUB_API_TOKEN</string>
+          <string>b9c04ee7804b9731d9f64b6826375625760dd960</string>
+          <string>INSTANCE_TYPE</string>
+          <string>t2.small</string>
+          <string>KEYPAIR_NAME</string>
+          <string>EA31337-Tester</string>
+          <string>MT4_VER</string>
+          <string>4.0.0.971</string>
+          <string>POWER_OFF</string>
+          <string>1</string>
+          <string>PRIVATE_KEY</string>
+          <string>${HOME}/.ssh/EA31337-Tester.pem</string>
+          <string>PROVIDER</string>
+          <string>aws</string>
+          <string>SUBNET_ID</string>
+          <string>subnet-2997c75e</string>
+          <string>TERMINATE</string>
+          <string>1</string>
+          <string>TEST_NAME</string>
+          <string>${JOB_BASE_NAME}</string>
+          <string>VM_NAME</string>
+          <string>${JOB_BASE_NAME}</string>
+        </tree-map>
+      </envVars>
+    </hudson.slaves.EnvironmentVariablesNodeProperty>
+  </nodeProperties>
   <globalNodeProperties/>
 </hudson>
