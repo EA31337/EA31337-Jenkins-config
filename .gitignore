@@ -1,0 +1,54 @@
+# Git untracked files to ignore.
+
+# Site-wide configuration files.
+*.xml
+# Except root configuration.
+!config.xml
+
+# Cache.
+.cache/
+
+# Fingerprint records.
+fingerprints/
+
+# Working directories.
+workspace/
+
+# Secret files.
+secrets/
+secret.*
+*.enc
+*.key
+users/
+
+# Plugins.
+plugins/
+
+# State files.
+*.state
+
+# Job state files.
+builds/
+
+# Updates.
+updates/
+
+# Hidden files.
+.*
+# Except git config files.
+!.git*
+
+# User content.
+userContent/
+
+# Log files.
+logs/
+*.log
+
+# Miscellaneous litter
+*.tmp
+*.old
+*.bak
+*.jar
+*.json
+*.lastExecVersion
