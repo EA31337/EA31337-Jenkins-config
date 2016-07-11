@@ -24,6 +24,7 @@ id_rsa
 
 # Plugins.
 plugins/
+!hudson.plugins.*.xml
 
 # State files.
 *.state
@@ -39,7 +40,7 @@ updates/
 
 # Hidden files.
 .*
-# Except git config files.
+# Except git and ssh config files.
 !.git*
 !.ssh/
 
