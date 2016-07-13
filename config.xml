@@ -2,7 +2,7 @@
 <hudson>
   <disabledAdministrativeMonitors/>
   <version>2.7.1</version>
-  <numExecutors>5</numExecutors>
+  <numExecutors>10</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
   <authorizationStrategy class="com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy">
@@ -94,7 +94,7 @@
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
   <clouds/>
-  <quietPeriod>5</quietPeriod>
+  <quietPeriod>20</quietPeriod>
   <scmCheckoutRetryCount>0</scmCheckoutRetryCount>
   <views>
     <hudson.model.AllView>
@@ -208,7 +208,7 @@
           <default>
             <comparator class="hudson.util.CaseInsensitiveComparator"/>
           </default>
-          <int>18</int>
+          <int>19</int>
           <string>EA_VER</string>
           <string>v1.069</string>
           <string>GIT_ARGS</string>
@@ -223,6 +223,8 @@
           <string>4.0.0.971</string>
           <string>OPT_DIR</string>
           <string>_optimization_results</string>
+          <string>OPT_REPORT</string>
+          <string>${JOB_BASE_NAME}--${Symbol}-${Deposit}${Currency}-${Year}year-${Spread}spread-${BT_Source}-optimization-test</string>
           <string>POWER_OFF</string>
           <string>1</string>
           <string>PRIVATE_KEY</string>
