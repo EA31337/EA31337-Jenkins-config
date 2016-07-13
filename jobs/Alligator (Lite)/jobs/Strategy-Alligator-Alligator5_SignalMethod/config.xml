@@ -103,6 +103,9 @@ SET_DIR=&quot;${Symbol}/default/${Deposit}${Currency}/${Spread}-spread/${Digits}
 REP_NAME=&quot;${TEST_NAME}--${Symbol}-${Deposit}${Currency}-${Year}year-${Spread}spread-${BT_Source}-optimization-test&quot;
 OPT_DIR=&quot;$SET_DIR/_optimization_results&quot;
 
+# Quick fix.
+sed -i&apos;.bak&apos; &quot;/data error/d&quot; scripts/run_backtest.sh
+
 # Exports.
 export ASSET=&quot;EA31337 EA31337-Backtest-Releases $EA_VER $VER_NAME-Backtest ~/files/EA&quot;
 export CLONE_REPO=&quot;https://$GITHUB_API_TOKEN@github.com/EA31337-Tester/EA31337-${VER_NAME}-Sets&quot;
@@ -119,7 +122,7 @@ vagrant provision</command>
       <unstableOnWarning>true</unstableOnWarning>
       <failBuildOnError>true</failBuildOnError>
       <showGraphs>true</showGraphs>
-      <parsingRulesPath>/var/lib/jenkins/conf/parse_log.rules</parsingRulesPath>
+      <parsingRulesPath>/var/lib/jenkins/conf/backtest.rules</parsingRulesPath>
       <useProjectRule>false</useProjectRule>
     </hudson.plugins.logparser.LogParserPublisher>
   </publishers>

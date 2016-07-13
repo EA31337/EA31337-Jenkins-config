@@ -101,6 +101,7 @@
     </hudson.model.ListView>
   </views>
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
+  <primaryView>All</primaryView>
   <healthMetrics>
     <com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric/>
   </healthMetrics>

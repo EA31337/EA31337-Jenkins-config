@@ -3,7 +3,7 @@
   <parsingRulesGlobal>
     <hudson.plugins.logparser.ParserRuleFile>
       <name>Parse backtesting log for warning/errors.</name>
-      <path>/var/lib/jenkins/conf/backtesting.rules</path>
+      <path>/var/lib/jenkins/conf/backtest.rules</path>
     </hudson.plugins.logparser.ParserRuleFile>
   </parsingRulesGlobal>
   <useLegacyFormatting>false</useLegacyFormatting>

@@ -112,6 +112,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>_Backtest (Lite)</string>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -205,9 +206,9 @@
         <unserializable-parents/>
         <tree-map>
           <default>
-            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../../views/listView/jobNames/comparator"/>
+            <comparator class="hudson.util.CaseInsensitiveComparator"/>
           </default>
-          <int>13</int>
+          <int>18</int>
           <string>EA_VER</string>
           <string>v1.069</string>
           <string>GIT_ARGS</string>
@@ -220,18 +221,28 @@
           <string>EA31337-Tester</string>
           <string>MT4_VER</string>
           <string>4.0.0.971</string>
+          <string>OPT_DIR</string>
+          <string>_optimization_results</string>
           <string>POWER_OFF</string>
           <string>1</string>
           <string>PRIVATE_KEY</string>
           <string>${HOME}/secrets/EA31337-Tester.pem</string>
           <string>PROVIDER</string>
           <string>aws</string>
+          <string>PUSH_REPO</string>
+          <string>1</string>
+          <string>SET_DIR</string>
+          <string>${Symbol:-EURUSD}/${Profile:-default}/${Deposit:-2000}${Currency:-USD}/${Spread:-10}-spread/${Digits:-5}-digits/${Year:-2014}</string>
           <string>SUBNET_ID</string>
           <string>subnet-2997c75e</string>
           <string>TERMINATE</string>
           <string>1</string>
+          <string>TEST_DIR</string>
+          <string>_test_results</string>
           <string>TEST_NAME</string>
           <string>${JOB_BASE_NAME}</string>
+          <string>TEST_REPORT</string>
+          <string>${JOB_BASE_NAME}--${Symbol}-${Deposit}${Currency}-${Year}year-${Spread}spread-${BT_Source}-test</string>
           <string>VM_NAME</string>
           <string>${JOB_BASE_NAME}</string>
         </tree-map>
