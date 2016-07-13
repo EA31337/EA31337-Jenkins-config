@@ -3,6 +3,7 @@
 
 # Match line starting with 'error', case-insensitive.
 #error /(?i) error[: ]/
+error /(?i) fatal[: ]/
 error / exit 1$/
 
 # List of warning rules.
