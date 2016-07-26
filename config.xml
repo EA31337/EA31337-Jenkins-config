@@ -2,7 +2,7 @@
 <hudson>
   <disabledAdministrativeMonitors/>
   <version>2.7.1</version>
-  <numExecutors>10</numExecutors>
+  <numExecutors>50</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
   <authorizationStrategy class="com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy">
@@ -89,7 +89,9 @@
   <projectNamingStrategy class="jenkins.model.ProjectNamingStrategy$DefaultProjectNamingStrategy"/>
   <workspaceDir>${JENKINS_HOME}/workspace/${ITEM_FULLNAME}</workspaceDir>
   <buildsDir>${ITEM_ROOTDIR}/builds</buildsDir>
-  <markupFormatter class="hudson.markup.EscapedMarkupFormatter"/>
+  <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter" plugin="antisamy-markup-formatter@1.5">
+    <disableSyntaxHighlighting>false</disableSyntaxHighlighting>
+  </markupFormatter>
   <jdks/>
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
@@ -124,12 +126,12 @@
         <hudson.views.LastDurationColumn/>
         <hudson.views.BuildButtonColumn/>
       </columns>
-      <includeRegex>.*Lite.*</includeRegex>
+      <includeRegex>.*\(Lite\).*</includeRegex>
       <recurse>false</recurse>
     </listView>
     <listView>
       <owner class="hudson" reference="../../.."/>
-      <name>Test</name>
+      <name>_Test</name>
       <filterExecutors>false</filterExecutors>
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
@@ -168,7 +170,7 @@
         <hudson.views.LastDurationColumn/>
         <hudson.views.BuildButtonColumn/>
       </columns>
-      <includeRegex>.*Advanced.*</includeRegex>
+      <includeRegex>.*\(Advanced\).*</includeRegex>
       <recurse>false</recurse>
     </listView>
     <listView>
@@ -190,7 +192,7 @@
         <hudson.views.LastDurationColumn/>
         <hudson.views.BuildButtonColumn/>
       </columns>
-      <includeRegex>.*Rider.*</includeRegex>
+      <includeRegex>.*\(Rider\).*</includeRegex>
       <recurse>false</recurse>
     </listView>
     <listView>
@@ -212,7 +214,7 @@
         <hudson.views.LastDurationColumn/>
         <hudson.views.BuildButtonColumn/>
       </columns>
-      <includeRegex>.*Libre.*</includeRegex>
+      <includeRegex>.*\(Libre\).*</includeRegex>
       <recurse>false</recurse>
     </listView>
     <org.jenkinsci.plugins.environmentdashboard.EnvDashboardView plugin="environment-dashboard@1.1.4">
@@ -233,7 +235,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <gridBuilder class="au.com.centrumsystems.hudson.plugin.buildpipeline.DownstreamProjectGridBuilder">
         <firstJob>Alligator (Lite)/Strategy-Alligator-Alligator1_SignalMethod</firstJob>
-        <firstJobLink>view/_View/job/Alligator%20(Lite)/job/Strategy-Alligator-Alligator1_SignalMethod/</firstJobLink>
+        <firstJobLink>job/Alligator%20(Lite)/job/Strategy-Alligator-Alligator1_SignalMethod/</firstJobLink>
       </gridBuilder>
       <noOfDisplayedBuilds>1</noOfDisplayedBuilds>
       <buildViewTitle></buildViewTitle>
@@ -255,6 +257,30 @@
       <properties class="hudson.model.View$PropertyList"/>
       <sections/>
     </hudson.plugins.sectioned__view.SectionedView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>_Templates</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>_Testing</string>
+        <string>_Testing/Lite Backtest</string>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+      <includeRegex>[Lite|Advanced].*[Optimization|Backtest]</includeRegex>
+      <recurse>false</recurse>
+    </listView>
   </views>
   <primaryView>All</primaryView>
   <slaveAgentPort>-1</slaveAgentPort>
@@ -270,9 +296,9 @@
           <default>
             <comparator class="hudson.util.CaseInsensitiveComparator"/>
           </default>
-          <int>19</int>
+          <int>16</int>
           <string>EA_VER</string>
-          <string>v1.069</string>
+          <string>v1.070</string>
           <string>GIT_ARGS</string>
           <string>--author=&quot;EA31337-Tester &lt;EA31337-Tester@users.noreply.github.com&gt;&quot;</string>
           <string>GITHUB_API_TOKEN</string>
@@ -285,28 +311,22 @@
           <string>4.0.0.971</string>
           <string>OPT_DIR</string>
           <string>_optimization_results</string>
-          <string>OPT_REPORT</string>
-          <string>${JOB_BASE_NAME}--${Symbol}-${Deposit}${Currency}-${Year}year-${Spread}spread-${BT_Source}-optimization-test</string>
           <string>POWER_OFF</string>
-          <string>1</string>
+          <string></string>
           <string>PRIVATE_KEY</string>
           <string>${HOME}/secrets/EA31337-Tester.pem</string>
           <string>PROVIDER</string>
           <string>aws</string>
           <string>PUSH_REPO</string>
           <string>1</string>
-          <string>SET_DIR</string>
-          <string>${Symbol:-EURUSD}/${Profile:-default}/${Deposit:-2000}${Currency:-USD}/${Spread:-10}-spread/${Digits:-5}-digits/${Year:-2014}</string>
           <string>SUBNET_ID</string>
           <string>subnet-2997c75e</string>
           <string>TERMINATE</string>
-          <string>1</string>
+          <string></string>
           <string>TEST_DIR</string>
           <string>_test_results</string>
           <string>TEST_NAME</string>
           <string>${JOB_BASE_NAME}</string>
-          <string>TEST_REPORT</string>
-          <string>${JOB_BASE_NAME}--${Symbol}-${Deposit}${Currency}-${Year}year-${Spread}spread-${BT_Source}-test</string>
           <string>VM_NAME</string>
           <string>${JOB_BASE_NAME}</string>
         </tree-map>
