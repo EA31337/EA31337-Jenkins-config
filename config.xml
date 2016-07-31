@@ -114,6 +114,9 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>_Actions (Lite)</string>
+        <string>_All-No_Actions-No_Boost (Lite)</string>
+        <string>_All-No_Boost (Lite)</string>
         <string>_Backtest (Lite)</string>
       </jobNames>
       <jobFilters/>
