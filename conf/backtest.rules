@@ -2,9 +2,9 @@
 # See: https://wiki.jenkins-ci.org/display/JENKINS/Log+Parser+Plugin
 
 # Match line starting with 'error', case-insensitive.
-#error /(?i) error[: ]/
+error /(?i) error[: ]/
 error /(?i) fatal[: ]/
-error /(?i) failed[: ]/
+error / FAILED[: ]/
 error / exit 1$/
 
 # List of warning rules.
