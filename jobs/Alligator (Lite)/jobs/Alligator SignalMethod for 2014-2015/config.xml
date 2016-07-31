@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.3">
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.19.2">
+      <projectUrl>https://github.com/EA31337-Tester/EA31337-Lite-Sets/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@1.9.0">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.9">
+    <script>node {
+   // Mark the code checkout &apos;stage&apos;....
+   stage &apos;Checkout&apos;
+
+   // Get some code from a GitHub repository
+   git url: &apos;https://github.com/jglick/simple-maven-project-with-tests.git&apos;
+
+   // Get the maven tool.
+   // ** NOTE: This &apos;M3&apos; maven tool must be configured
+   // **       in the global configuration.           
+   def mvnHome = tool &apos;M3&apos;
+
+   // Mark the code build &apos;stage&apos;....
+   stage &apos;Build&apos;
+   // Run the maven build
+   sh &quot;${mvnHome}/bin/mvn -Dmaven.test.failure.ignore clean package&quot;
+   step([$class: &apos;JUnitResultArchiver&apos;, testResults: &apos;**/target/surefire-reports/TEST-*.xml&apos;])
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+</flow-definition>

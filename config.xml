@@ -315,7 +315,7 @@
           <string>OPT_DIR</string>
           <string>_optimization_results</string>
           <string>POWER_OFF</string>
-          <string></string>
+          <string>1</string>
           <string>PRIVATE_KEY</string>
           <string>${HOME}/secrets/EA31337-Tester.pem</string>
           <string>PROVIDER</string>
@@ -325,7 +325,7 @@
           <string>SUBNET_ID</string>
           <string>subnet-2997c75e</string>
           <string>TERMINATE</string>
-          <string></string>
+          <string>1</string>
           <string>TEST_DIR</string>
           <string>_test_results</string>
           <string>TEST_NAME</string>
