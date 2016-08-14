@@ -1,0 +1,358 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>30</daysToKeep>
+        <numToKeep>100</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.20.0">
+      <projectUrl>https://github.com/EA31337-Tester/EA31337-Lite-Sets/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.25">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Strategy</name>
+          <description>Choose strategy to test.</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>AC-AC</string>
+              <string>AC-AC1</string>
+              <string>AC-AC5</string>
+              <string>AC-AC15</string>
+              <string>AC-AC30</string>
+              <string>AD-AD</string>
+              <string>AD-AD1</string>
+              <string>AD-AD5</string>
+              <string>AD-AD15</string>
+              <string>AD-AD30</string>
+              <string>ADX-ADX</string>
+              <string>ADX-ADX1</string>
+              <string>ADX-ADX5</string>
+              <string>ADX-ADX15</string>
+              <string>ADX-ADX30</string>
+              <string>Alligator-Alligator</string>
+              <string>Alligator-Alligator1</string>
+              <string>Alligator-Alligator5</string>
+              <string>Alligator-Alligator15</string>
+              <string>Alligator-Alligator30</string>
+              <string>ATR-ATR</string>
+              <string>ATR-ATR1</string>
+              <string>ATR-ATR5</string>
+              <string>ATR-ATR15</string>
+              <string>ATR-ATR30</string>
+              <string>Awesome-Awesome</string>
+              <string>Awesome-Awesome1</string>
+              <string>Awesome-Awesome5</string>
+              <string>Awesome-Awesome15</string>
+              <string>Awesome-Awesome30</string>
+              <string>Bands-Bands</string>
+              <string>Bands-Bands1</string>
+              <string>Bands-Bands5</string>
+              <string>Bands-Bands15</string>
+              <string>Bands-Bands30</string>
+              <string>BPower-BPower</string>
+              <string>BPower-BPower1</string>
+              <string>BPower-BPower5</string>
+              <string>BPower-BPower15</string>
+              <string>BPower-BPower30</string>
+              <string>Breakage-Breakage</string>
+              <string>Breakage-Breakage1</string>
+              <string>Breakage-Breakage5</string>
+              <string>Breakage-Breakage15</string>
+              <string>Breakage-Breakage30</string>
+              <string>BWMFI-BWMFI</string>
+              <string>BWMFI-BWMFI1</string>
+              <string>BWMFI-BWMFI5</string>
+              <string>BWMFI-BWMFI15</string>
+              <string>BWMFI-BWMFI30</string>
+              <string>CCI-CCI</string>
+              <string>CCI-CCI1</string>
+              <string>CCI-CCI5</string>
+              <string>CCI-CCI15</string>
+              <string>CCI-CCI30</string>
+              <string>DeMarker-DeMarker</string>
+              <string>DeMarker-DeMarker1</string>
+              <string>DeMarker-DeMarker5</string>
+              <string>DeMarker-DeMarker15</string>
+              <string>DeMarker-DeMarker30</string>
+              <string>Envelopes-Envelopes</string>
+              <string>Envelopes-Envelopes1</string>
+              <string>Envelopes-Envelopes5</string>
+              <string>Envelopes-Envelopes15</string>
+              <string>Envelopes-Envelopes30</string>
+              <string>Force-Force</string>
+              <string>Force-Force1</string>
+              <string>Force-Force5</string>
+              <string>Force-Force15</string>
+              <string>Force-Force30</string>
+              <string>Fractals-Fractals</string>
+              <string>Fractals-Fractals1</string>
+              <string>Fractals-Fractals5</string>
+              <string>Fractals-Fractals15</string>
+              <string>Fractals-Fractals30</string>
+              <string>Gator-Gator</string>
+              <string>Gator-Gator1</string>
+              <string>Gator-Gator5</string>
+              <string>Gator-Gator15</string>
+              <string>Gator-Gator30</string>
+              <string>Ichimoku-Ichimoku</string>
+              <string>Ichimoku-Ichimoku1</string>
+              <string>Ichimoku-Ichimoku5</string>
+              <string>Ichimoku-Ichimoku15</string>
+              <string>Ichimoku-Ichimoku30</string>
+              <string>MA-MA</string>
+              <string>MA-MA1</string>
+              <string>MA-MA5</string>
+              <string>MA-MA15</string>
+              <string>MA-MA30</string>
+              <string>MACD-MACD</string>
+              <string>MACD-MACD1</string>
+              <string>MACD-MACD5</string>
+              <string>MACD-MACD15</string>
+              <string>MACD-MACD30</string>
+              <string>MFI-MFI</string>
+              <string>MFI-MFI1</string>
+              <string>MFI-MFI5</string>
+              <string>MFI-MFI15</string>
+              <string>MFI-MFI30</string>
+              <string>Momentum-Momentum</string>
+              <string>Momentum-Momentum1</string>
+              <string>Momentum-Momentum5</string>
+              <string>Momentum-Momentum15</string>
+              <string>Momentum-Momentum30</string>
+              <string>OBV-OBV</string>
+              <string>OBV-OBV1</string>
+              <string>OBV-OBV5</string>
+              <string>OBV-OBV15</string>
+              <string>OBV-OBV30</string>
+              <string>OSMA-OSMA</string>
+              <string>OSMA-OSMA1</string>
+              <string>OSMA-OSMA5</string>
+              <string>OSMA-OSMA15</string>
+              <string>OSMA-OSMA30</string>
+              <string>RSI-RSI</string>
+              <string>RSI-RSI1</string>
+              <string>RSI-RSI5</string>
+              <string>RSI-RSI15</string>
+              <string>RSI-RSI30</string>
+              <string>RVI-RVI</string>
+              <string>RVI-RVI1</string>
+              <string>RVI-RVI5</string>
+              <string>RVI-RVI15</string>
+              <string>RVI-RVI30</string>
+              <string>SAR-SAR</string>
+              <string>SAR-SAR1</string>
+              <string>SAR-SAR5</string>
+              <string>SAR-SAR15</string>
+              <string>SAR-SAR30</string>
+              <string>StdDev-StdDev</string>
+              <string>StdDev-StdDev1</string>
+              <string>StdDev-StdDev5</string>
+              <string>StdDev-StdDev15</string>
+              <string>StdDev-StdDev30</string>
+              <string>Stochastic-Stochastic</string>
+              <string>Stochastic-Stochastic1</string>
+              <string>Stochastic-Stochastic5</string>
+              <string>Stochastic-Stochastic15</string>
+              <string>Stochastic-Stochastic30</string>
+              <string>WPR-WPR</string>
+              <string>WPR-WPR1</string>
+              <string>WPR-WPR5</string>
+              <string>WPR-WPR15</string>
+              <string>WPR-WPR30</string>
+              <string>ZigZag-ZigZag</string>
+              <string>ZigZag-ZigZag1</string>
+              <string>ZigZag-ZigZag5</string>
+              <string>ZigZag-ZigZag15</string>
+              <string>ZigZag-ZigZag30</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Year</name>
+          <description>Year to backtest.</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>2015</string>
+              <string>2014</string>
+              <string>2013</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>Months</name>
+          <description>Months to test.</description>
+          <defaultValue>1-12</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>Deposit</name>
+          <description>Account deposit to backtest.</description>
+          <defaultValue>2000</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Symbol</name>
+          <description>Symbol to backtest.</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>EURUSD</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Spread</name>
+          <description>Spread to backtest.</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>10</string>
+              <string>20</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Digits</name>
+          <description>Number of market digits.</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>5</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Currency</name>
+          <description>Base currency of the account.</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>USD</string>
+              <string>GBP</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>BT_Source</name>
+          <description>Source of the tick data for backtesting.</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>DS</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Profile</name>
+          <description>Select profile name to test.</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>default</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@1.9.0">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    <com.joelj.jenkins.eztemplates.TemplateProperty plugin="ez-templates@1.2.0"/>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@2.5.3">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/EA31337/FX-MT-VM</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/dev</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>true</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>true</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!/bin/bash -xe
+# Exports.
+export ASSET=&quot;EA31337 EA31337-Backtest-Releases $EA_VER $VER_NAME-Backtest ~/files/EA&quot;
+export CLONE_REPO=https://$GITHUB_API_TOKEN@github.com/EA31337-Tester/EA31337-${VER_NAME}-Sets
+export RUN_TEST=&quot;-t -v -x -I $INI_OPTS -c $Currency -p $Symbol -d $Deposit -s $Spread -y $Year -m $Months -D $Digits -b $BT_Source -e EA31337-$VER_NAME -E $EA_OPTS -f */&apos;$BASE_DIR&apos;/*.set -M $MT4_VER -i &apos;$BASE_REPO/$RULES_INIT_PATH&apos; -i \&quot;\$(find ~ -name Strategy-${Strategy}.test.rule -maxdepth 5 || echo FAILED)\&quot; -r &apos;$REPORT_NAME&apos; -O &apos;$BASE_REPO/$BASE_DIR/$SUBDIR&apos;&quot;
+
+# Build.
+vagrant up --no-provision --destroy-on-error --provider=aws
+vagrant provision</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.plugins.logparser.LogParserPublisher plugin="log-parser@2.0">
+      <unstableOnWarning>true</unstableOnWarning>
+      <failBuildOnError>true</failBuildOnError>
+      <showGraphs>true</showGraphs>
+      <parsingRulesPath>/var/lib/jenkins/conf/backtest.rules</parsingRulesPath>
+      <useProjectRule>false</useProjectRule>
+    </hudson.plugins.logparser.LogParserPublisher>
+    <hudson.plugins.postbuildtask.PostbuildTask plugin="postbuild-task@1.8">
+      <tasks>
+        <hudson.plugins.postbuildtask.TaskProperties>
+          <logTexts>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>ERROR</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>FAILURE</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>ConnectionTimeout</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+          </logTexts>
+          <EscalateStatus>false</EscalateStatus>
+          <RunIfJobSuccessful>false</RunIfJobSuccessful>
+          <script>vagrant destroy -f</script>
+        </hudson.plugins.postbuildtask.TaskProperties>
+      </tasks>
+    </hudson.plugins.postbuildtask.PostbuildTask>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.8.4"/>
+    <EnvInjectBuildWrapper plugin="envinject@1.92.1">
+      <info>
+        <propertiesContent>VER_NAME=Lite
+EA_OPTS=&quot;VerboseInfo=1,maxdrawdown_enable=0&quot;
+INI_OPTS=&quot;TestPeriod=M30,TestModel=0&quot;
+BASE_REPO=EA31337-Lite-Sets
+REPORT_NAME=${Strategy}_${Symbol}_${Deposit}${Currency}_${Spread}spread_${Digits}digits_${Year}
+VM_NAME=${REPORT_NAME}
+INIT_SCRIPT=/vagrant/init_test.sh
+RULES_INIT_PATH=_rules/Common/.init.rules.inc
+BASE_DIR=${Symbol}/${Profile}/${Deposit}${Currency}/${Spread}-spread/${Digits}-digits/${Year}
+SUBDIR=_strategies</propertiesContent>
+        <loadFilesFromMaster>false</loadFilesFromMaster>
+      </info>
+    </EnvInjectBuildWrapper>
+  </buildWrappers>
+</project>
