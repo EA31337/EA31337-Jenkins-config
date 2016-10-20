@@ -12,7 +12,7 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.20.0">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.22.1">
       <projectUrl>https://github.com/EA31337-Tester/EA31337-Lite-Sets/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
@@ -22,11 +22,20 @@
     </com.sonyericsson.rebuild.RebuildSettings>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
-        <hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
           <name>Year</name>
           <description>Year to backtest.</description>
-          <defaultValue>2014</defaultValue>
-        </hudson.model.StringParameterDefinition>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>2015</string>
+              <string>2014</string>
+              <string>2013</string>
+              <string>2012</string>
+              <string>2011</string>
+              <string>2010</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>Months</name>
           <description>Months to test.</description>
@@ -68,6 +77,7 @@
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
               <string>DS</string>
+              <string>DS2</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
@@ -82,9 +92,9 @@
       <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
       <paramsToUseForLimit></paramsToUseForLimit>
     </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
-    <com.joelj.jenkins.eztemplates.TemplateProperty plugin="ez-templates@1.2.0"/>
+    <com.joelj.jenkins.eztemplates.TemplateProperty plugin="ez-templates@1.2.3"/>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@2.5.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -141,25 +151,31 @@ vagrant provision</command>
               <logText>ConnectionTimeout</logText>
               <operator>OR</operator>
             </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>non-zero exit</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>vagrant destroy -f</script>
+          <script>vagrant status&#xd;
+vagrant destroy -f</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
   </publishers>
   <buildWrappers>
-    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.8.4"/>
-    <EnvInjectBuildWrapper plugin="envinject@1.92.1">
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.8.7"/>
+    <EnvInjectBuildWrapper plugin="envinject@1.93.1">
       <info>
         <propertiesContent>VER_NAME=Lite
-EA_OPTS=&quot;VerboseInfo=1,maxdrawdown_enable=0&quot;
+EA_OPTS=&quot;VerboseInfo=1,maxdrawdown_enable=1&quot;
 INI_OPTS=&quot;TestPeriod=M30,TestModel=0&quot;
 SET_DIR=${Symbol}/${Profile:-default}/${Deposit}${Currency}/${Spread}-spread/${Digits}-digits/${Year}
-REPORT_NAME=${JOB_BASE_NAME}--${Symbol}-${Deposit}${Currency}-${Year}year-${Spread}spread-${BT_Source}
+REPORT_NAME=${JOB_BASE_NAME}--${Symbol}-${Deposit}${Currency}-${Year}year-${Spread}spread-${BT_Source}-test
 CLONE_REPO=https://$GITHUB_API_TOKEN@github.com/EA31337-Tester/EA31337-${VER_NAME}-Sets
-RULES_INIT_PATH=&quot;_rules/Common/.init.rules.inc&quot;</propertiesContent>
+RULES_INIT_PATH=&quot;_rules/Common/.init.rules.inc&quot;
+VM_NAME=$VM_NAME-${Symbol}-${Year}</propertiesContent>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
