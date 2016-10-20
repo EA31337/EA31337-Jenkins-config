@@ -70,13 +70,19 @@
           <permission>hudson.model.Item.Build</permission>
           <permission>hudson.model.Item.ViewStatus</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid>karolacello</sid>
+          <sid>nseam</sid>
+        </assignedSIDs>
       </role>
       <role name="job-viewer" pattern=".*">
         <permissions>
           <permission>hudson.model.Item.ViewStatus</permission>
         </permissions>
-        <assignedSIDs/>
+        <assignedSIDs>
+          <sid>karolacello</sid>
+          <sid>nseam</sid>
+        </assignedSIDs>
       </role>
     </roleMap>
     <roleMap type="slaveRoles"/>
@@ -140,6 +146,7 @@
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
+        <string>Test-VM</string>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -230,7 +237,7 @@
       <compOrder></compOrder>
       <deployHistory>10</deployHistory>
     </org.jenkinsci.plugins.environmentdashboard.EnvDashboardView>
-    <au.com.centrumsystems.hudson.plugin.buildpipeline.BuildPipelineView plugin="build-pipeline-plugin@1.5.3.1">
+    <au.com.centrumsystems.hudson.plugin.buildpipeline.BuildPipelineView plugin="build-pipeline-plugin@1.5.4">
       <owner class="hudson" reference="../../.."/>
       <name>_Pipeline</name>
       <filterExecutors>false</filterExecutors>
@@ -269,7 +276,7 @@
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>_Testing</string>
-        <string>_Testing/Lite Backtest</string>
+        <string>_Testing/Lite Backtest Rule</string>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -301,7 +308,7 @@
           </default>
           <int>16</int>
           <string>EA_VER</string>
-          <string>v1.070</string>
+          <string>v1.071</string>
           <string>GIT_ARGS</string>
           <string>--author=&quot;EA31337-Tester &lt;EA31337-Tester@users.noreply.github.com&gt;&quot;</string>
           <string>GITHUB_API_TOKEN</string>
