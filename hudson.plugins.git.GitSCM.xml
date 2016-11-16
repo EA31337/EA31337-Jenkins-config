@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<hudson.plugins.git.GitSCM_-DescriptorImpl plugin="git@2.5.2">
+<hudson.plugins.git.GitSCM_-DescriptorImpl plugin="git@3.0.0">
   <generation>51</generation>
   <globalConfigName>Jenkins</globalConfigName>
   <globalConfigEmail>EA31337-Tester@users.noreply.github.com</globalConfigEmail>

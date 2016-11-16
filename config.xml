@@ -2,7 +2,7 @@
 <hudson>
   <disabledAdministrativeMonitors/>
   <version>2.7.1</version>
-  <numExecutors>50</numExecutors>
+  <numExecutors>30</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
   <authorizationStrategy class="com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy">
@@ -306,7 +306,7 @@
           <default>
             <comparator class="hudson.util.CaseInsensitiveComparator"/>
           </default>
-          <int>16</int>
+          <int>17</int>
           <string>EA_VER</string>
           <string>v1.071</string>
           <string>GIT_ARGS</string>
@@ -339,6 +339,8 @@
           <string>${JOB_BASE_NAME}</string>
           <string>VM_NAME</string>
           <string>${JOB_BASE_NAME}</string>
+          <string>VOLUME_SIZE</string>
+          <string>12</string>
         </tree-map>
       </envVars>
     </hudson.slaves.EnvironmentVariablesNodeProperty>
