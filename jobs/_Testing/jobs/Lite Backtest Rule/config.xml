@@ -27,10 +27,14 @@
           <description>Year to backtest.</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
+              <string>2014-2015</string>
+              <string>2011-2015</string>
               <string>2015</string>
               <string>2014</string>
               <string>2013</string>
               <string>2012</string>
+              <string>2011</string>
+              <string>2010</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
