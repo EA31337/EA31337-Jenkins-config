@@ -187,6 +187,7 @@
             <a class="string-array">
               <string>2014-2015</string>
               <string>2011-2015</string>
+              <string>2016</string>
               <string>2015</string>
               <string>2014</string>
               <string>2013</string>
@@ -318,7 +319,7 @@
 # Exports.
 export ASSET=&quot;EA31337 EA31337-Backtest-Releases $EA_VER $VER_NAME-Backtest ~/files/EA&quot;
 export CLONE_REPO=https://$GITHUB_API_TOKEN@github.com/EA31337-Tester/EA31337-${VER_NAME}-Sets
-export RUN_TEST=&quot;-t -v -x -I $INI_OPTS -c $BaseCurrency -p $Symbol -d $Deposit -s $Spread -y $Year -m $Months -D $Digits -b $BT_Source -e EA31337-$VER_NAME -E $EA_OPTS -f */&apos;$BASE_DIR&apos;/*.set -M $MT4_VER -i &apos;$BASE_REPO/$RULES_INIT_PATH&apos; -i \&quot;\$(find ~ -name Strategy-${Strategy}.test.rule -maxdepth 5 || echo FAILED)\&quot; -r &apos;$REPORT_NAME&apos; -O &apos;$BASE_REPO/$BASE_DIR/$SUBDIR&apos;&quot;
+export RUN_TEST=&quot;-t -v -x -I $INI_OPTS -c $BaseCurrency -p $Symbol -d $Deposit -s $Spread -y $Year -m $Months -D $Digits -b $BT_Source -e EA31337-$VER_NAME -S $SET_OPTS -E $EA_OPTS -f */&apos;$BASE_DIR&apos;/*.set -M $MT4_VER -i &apos;$BASE_REPO/$RULES_INIT_PATH&apos; -i \&quot;\$(find ~ -name Strategy-${Strategy}.test.rule -maxdepth 5 || echo FAILED)\&quot; -r &apos;$REPORT_NAME&apos; -O &apos;$BASE_REPO/$BASE_DIR/$SUBDIR&apos;&quot;
 
 # Build.
 vagrant up --no-provision --destroy-on-error --provider=aws
@@ -363,7 +364,8 @@ vagrant destroy -f</script>
     <EnvInjectBuildWrapper plugin="envinject@1.93.1">
       <info>
         <propertiesContent>VER_NAME=Lite
-EA_OPTS=&quot;VerboseInfo=1,maxdrawdown_enable=0&quot;
+SET_OPTS=&quot;VerboseInfo=1&quot;
+EA_OPTS=&quot;maxdrawdown_enable=0&quot;
 INI_OPTS=&quot;TestPeriod=${TestPeriod},TestModel=0&quot;
 BASE_REPO=EA31337-Lite-Sets
 REPORT_NAME=Strategy-${Strategy}_${Symbol}_${Deposit}${BaseCurrency}_${Spread}spread_${Digits}digits_${Year}-${TestPeriod}-${BT_Source}-test
@@ -371,7 +373,8 @@ VM_NAME=${REPORT_NAME}
 INIT_SCRIPT=/vagrant/init_test.sh
 RULES_INIT_PATH=_rules/Common/.init.rules.inc
 BASE_DIR=${Symbol}/${Profile}/${Deposit}${BaseCurrency}/${Spread}-spread/${Digits}-digits/${Year}
-SUBDIR=_strategies</propertiesContent>
+SUBDIR=_strategies
+PUSH_REPO=1</propertiesContent>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>

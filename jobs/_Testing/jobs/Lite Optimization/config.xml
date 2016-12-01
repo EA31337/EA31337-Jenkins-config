@@ -29,6 +29,7 @@
             <a class="string-array">
               <string>2014-2015</string>
               <string>2011-2015</string>
+              <string>2016</string>
               <string>2015</string>
               <string>2014</string>
               <string>2013</string>
@@ -122,7 +123,7 @@
     <hudson.tasks.Shell>
       <command># Exports.
 export ASSET=&quot;EA31337 EA31337-Backtest-Releases $EA_VER $VER_NAME-Backtest ~/files/EA&quot;
-export RUN_TEST=&quot;-o -v -t -x -I $INI_OPTS -E $EA_OPTS -f \&quot;$SET_DIR\&quot;/*.set -e EA31337-$VER_NAME -c $Currency -p $Symbol -d $Deposit -s $Spread -y $Year -m $Months -D $Digits -b $BT_Source -M $MT4_VER -i */${RULES_INIT_PATH} -i \&quot;\$(find ~ -name \*${TEST_NAME}.rule\* -maxdepth 5 || echo FAILED)\&quot; -r \&quot;$REPORT_NAME\&quot; -O \&quot;$SET_DIR/$OPT_DIR\&quot;&quot;
+export RUN_TEST=&quot;-o -v -t -x -I $INI_OPTS -S $SET_OPTS -E $EA_OPTS -f \&quot;$SET_DIR\&quot;/*.set -e EA31337-$VER_NAME -c $Currency -p $Symbol -d $Deposit -s $Spread -y $Year -m $Months -D $Digits -b $BT_Source -M $MT4_VER -i */${RULES_INIT_PATH} -i \&quot;\$(find ~ -name \*${TEST_NAME}.rule\* -maxdepth 5 || echo FAILED)\&quot; -r \&quot;$REPORT_NAME\&quot; -O \&quot;$SET_DIR/$OPT_DIR\&quot;&quot;
 
 # Build.
 vagrant up --no-provision --destroy-on-error --provider=aws
@@ -171,13 +172,16 @@ vagrant destroy -f</script>
     <EnvInjectBuildWrapper plugin="envinject@1.93.1">
       <info>
         <propertiesContent>VER_NAME=Lite
-EA_OPTS=&quot;VerboseInfo=1,maxdrawdown_enable=1&quot;
+SET_OPTS=&quot;VerboseInfo=1&quot;
+EA_OPTS=&quot;maxdrawdown_enable=1&quot;
 INI_OPTS=&quot;TestPeriod=M30,TestModel=0&quot;
+BOOT_CODE=clean_ea
 SET_DIR=EA31337-${VER_NAME}-Sets/${Symbol}/${Profile:-default}/${Deposit}${Currency}/${Spread}-spread/${Digits}-digits/${Year}
 REPORT_NAME=${JOB_BASE_NAME}--${Symbol}-${Deposit}${Currency}-${Year}year-${Spread}spread-${BT_Source}-test
 CLONE_REPO=https://$GITHUB_API_TOKEN@github.com/EA31337-Tester/EA31337-${VER_NAME}-Sets
 RULES_INIT_PATH=&quot;_rules/Common/.init.rules.inc&quot;
 VM_NAME=$VM_NAME-${Symbol}-${Year}
+PUSH_REPO=1
 VOLUME_SIZE=20</propertiesContent>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>

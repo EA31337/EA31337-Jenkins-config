@@ -277,6 +277,7 @@
         <comparator class="hudson.util.CaseInsensitiveComparator"/>
         <string>_Testing</string>
         <string>_Testing/Lite Backtest Rule</string>
+        <string>_VM</string>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -306,9 +307,13 @@
           <default>
             <comparator class="hudson.util.CaseInsensitiveComparator"/>
           </default>
-          <int>17</int>
+          <int>18</int>
+          <string>AMI</string>
+          <string>ami-a1e5ddb6</string>
+          <string>ASSET_OVERRIDE</string>
+          <string>1</string>
           <string>EA_VER</string>
-          <string>v1.071</string>
+          <string>v1.072</string>
           <string>GIT_ARGS</string>
           <string>--author=&quot;EA31337-Tester &lt;EA31337-Tester@users.noreply.github.com&gt;&quot;</string>
           <string>GITHUB_API_TOKEN</string>
@@ -318,7 +323,7 @@
           <string>KEYPAIR_NAME</string>
           <string>EA31337-Tester</string>
           <string>MT4_VER</string>
-          <string>4.0.0.971</string>
+          <string>4.0.0.1010</string>
           <string>OPT_DIR</string>
           <string>_optimization_results</string>
           <string>POWER_OFF</string>
@@ -327,8 +332,6 @@
           <string>${HOME}/secrets/EA31337-Tester.pem</string>
           <string>PROVIDER</string>
           <string>aws</string>
-          <string>PUSH_REPO</string>
-          <string>1</string>
           <string>SUBNET_ID</string>
           <string>subnet-2997c75e</string>
           <string>TERMINATE</string>

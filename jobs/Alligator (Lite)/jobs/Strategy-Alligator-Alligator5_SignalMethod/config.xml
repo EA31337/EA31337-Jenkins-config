@@ -91,10 +91,10 @@
           <name>TestPeriod</name>
           <description>Select period to test.</description>
           <choices>
-            <string>M1</string>
-            <string>M5</string>
-            <string>M15</string>
             <string>M30</string>
+            <string>M15</string>
+            <string>M5</string>
+            <string>M1</string>
             <string>H1</string>
             <string>H4</string>
           </choices>
@@ -160,7 +160,7 @@ _EOF</command>
       <command>#!/bin/bash -xe
 # Exports.
 export ASSET=&quot;EA31337 EA31337-Backtest-Releases $EA_VER $VER_NAME-Backtest ~/files/EA&quot;
-export RUN_TEST=&quot;-t -v -x -I $INI_OPTS -E $EA_OPTS -e EA31337-$VER_NAME -M $MT4_VER -B &apos;${INIT_SCRIPT}&apos; -f &apos;$BASE_REPO/$SET_DIR&apos;/*.set -r &apos;$REPORT_NAME&apos; -O &apos;$BASE_REPO/$SET_DIR/$SUBDIR&apos;&quot;
+export RUN_TEST=&quot;-t -v -G -x -I $INI_OPTS -S $SET_OPTS -E $EA_OPTS -e EA31337-$VER_NAME -M $MT4_VER -B &apos;${INIT_SCRIPT}&apos; -f &apos;$BASE_REPO/$SET_DIR&apos;/*.set -r &apos;$REPORT_NAME&apos; -O &apos;$BASE_REPO/$SET_DIR/$SUBDIR&apos;&quot;
 #unset POWER_OFF
 #unset TERMINATE
 
@@ -211,7 +211,8 @@ vagrant destroy -f</script>
     <EnvInjectBuildWrapper plugin="envinject@1.93.1">
       <info>
         <propertiesContent>VER_NAME=Lite
-EA_OPTS=VerboseInfo=1,ValidateSettings=0,maxdrawdown_enable=0
+SET_OPTS=&quot;VerboseInfo=1,ValidateSettings=0&quot;
+EA_OPTS=maxdrawdown_enable=0
 INI_OPTS=TestPeriod=${TestPeriod},TestModel=0
 SET_DIR=${Symbol}/${Profile}/${Deposit}${BaseCurrency}/${Spread}-spread/${Digits}-digits/${Year}
 REPORT_NAME=${Symbol}-${Deposit}${BaseCurrency}-${Year}year-${Spread}spread-${TestPeriod}-${BT_Source}-test
@@ -220,7 +221,10 @@ BASE_REPO=EA31337-Lite-Sets
 CLONE_REPO=https://$GITHUB_API_TOKEN@github.com/EA31337-Tester/EA31337-${VER_NAME}-Sets
 INIT_SCRIPT=/vagrant/init_test.sh
 SUBDIR=_test_results
-VOLUME_SIZE=50</propertiesContent>
+GIF_ENHANCE=&apos;-n -cbg #031634 -cvl RoyalBlue3 -cbl #96feff -cgr NavyBlue -ctx #3bffff&apos;
+GIF_TEXT_COLOR=RoyalBlue
+PUSH_REPO=1
+VOLUME_SIZE=40</propertiesContent>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
