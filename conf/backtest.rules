@@ -6,6 +6,7 @@ error /(?i) error[: ]/
 error /(?i) fatal[: ]/
 error / FAILED[: ]/
 error / exit 1$/
+error /(?i) Broken pipe/
 
 # List of warning rules.
 warning /(?i) warning[: ]/
