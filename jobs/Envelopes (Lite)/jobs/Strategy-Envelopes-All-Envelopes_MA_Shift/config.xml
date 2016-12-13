@@ -49,42 +49,75 @@
     </com.joelj.jenkins.eztemplates.TemplateImplementationProperty>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions class="linked-list">
-        <hudson.model.StringParameterDefinition>
-          <name>Year</name>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Years</name>
           <description>Year to backtest.</description>
-          <defaultValue>2014</defaultValue>
-        </hudson.model.StringParameterDefinition>
+          <choices>
+            <string>2014-2015</string>
+            <string>2011-2015</string>
+            <string>2010,2011,2012,2013,2014,2015,2016</string>
+            <string>2016</string>
+            <string>2015</string>
+            <string>2014</string>
+            <string>2013</string>
+            <string>2012</string>
+            <string>2011</string>
+            <string>2010</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>Months</name>
           <description>Months to test.</description>
           <defaultValue>1-12</defaultValue>
         </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>Deposit</name>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Deposits</name>
           <description>Account deposit to backtest.</description>
-          <defaultValue>2000</defaultValue>
-        </hudson.model.StringParameterDefinition>
+          <choices>
+            <string>10000</string>
+            <string>2000</string>
+            <string>2000,10000</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>Symbol</name>
           <description>Symbol to backtest.</description>
           <defaultValue>EURUSD</defaultValue>
         </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>Spread</name>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Spreads</name>
           <description>Spread to backtest.</description>
-          <defaultValue>10</defaultValue>
-        </hudson.model.StringParameterDefinition>
+          <choices>
+            <string>40</string>
+            <string>20</string>
+            <string>10</string>
+            <string>10,20</string>
+            <string>10,20,40</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>Digits</name>
           <description>Number of market digits.</description>
           <defaultValue>5</defaultValue>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
-          <name>Currency</name>
+          <name>BaseCurrency</name>
           <description>Base currency of the account.</description>
           <choices>
             <string>USD</string>
             <string>GBP</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>TestPeriod</name>
+          <description>Select period to test.</description>
+          <choices>
+            <string>M30</string>
+            <string>M15</string>
+            <string>M5</string>
+            <string>M1</string>
+            <string>H1</string>
+            <string>H4</string>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
@@ -93,6 +126,37 @@
           <choices>
             <string>DS</string>
             <string>DS2</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>InstanceType</name>
+          <description>Select an instance type. See: https://aws.amazon.com/ec2/instance-types/</description>
+          <choices>
+            <string>t2.small</string>
+            <string>t2.medium</string>
+            <string>t2.large</string>
+            <string>t2.xlarge</string>
+            <string>t2.2xlarge</string>
+            <string>t2.micro</string>
+            <string>t2.nano</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>MaxDD</name>
+          <description>The maximal drawdown to consider the test result (in %).</description>
+          <choices>
+            <string>50</string>
+            <string>80</string>
+            <string>90</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>TestModel</name>
+          <description>Model quality for the test. Use 0 for every tick, 1 for control points and 2 for open prices only.</description>
+          <choices>
+            <string>1</string>
+            <string>2</string>
+            <string>0</string>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
@@ -107,7 +171,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>*/dev</name>
+        <name>*/dev3</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -122,13 +186,26 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command># Exports.
+      <command>#!/usr/bin/env bash
+
+# Exports.
 export ASSET=&quot;EA31337 EA31337-Backtest-Releases $EA_VER $VER_NAME-Backtest ~/files/EA&quot;
-export RUN_TEST=&quot;-o -v -t -x -I $INI_OPTS -S $SET_OPTS -E $EA_OPTS -f \&quot;$SET_DIR\&quot;/*.set -e EA31337-$VER_NAME -c $Currency -p $Symbol -d $Deposit -s $Spread -y $Year -m $Months -D $Digits -b $BT_Source -M $MT4_VER -i */${RULES_INIT_PATH} -i \&quot;\$(find ~ -name \*${TEST_NAME}.rule\* -maxdepth 5 || echo FAILED)\&quot; -r \&quot;$REPORT_NAME\&quot; -O \&quot;$SET_DIR/$OPT_DIR\&quot;&quot;
 
 # Build.
 vagrant up --no-provision --destroy-on-error --provider=aws
-vagrant provision</command>
+
+for year in ${Years//,/ }; do
+  for deposit in ${Deposits//,/ }; do
+    for spread in ${Spreads//,/ }; do
+      SET_DIR=EA31337-${VER_NAME}-Sets/${Symbol}/${Profile:-default}/${deposit}${BaseCurrency}/${spread}-spread/${Digits}-digits/${year}
+      REPORT_NAME=${JOB_BASE_NAME}--${Symbol}-${deposit}${BaseCurrency}-${year}year-${spread}spread-${BT_Source}-test
+      export RUN_TEST=&quot;-o -v -t -x -I $INI_OPTS -S $SET_OPTS -E $EA_OPTS -f \&quot;$SET_DIR\&quot;/*.set -e EA31337-$VER_NAME -c $BaseCurrency -p $Symbol -d $deposit -s $spread -y $year -m $Months -D $Digits -P $TestPeriod -b $BT_Source -M $MT4_VER -i */${RULES_INIT_PATH} -i \&quot;\$(find ~ -maxdepth 5 -name \*${TEST_NAME}.rule\* || echo FAILED)\&quot; -r \&quot;$REPORT_NAME\&quot; -O \&quot;$SET_DIR/$OPT_DIR\&quot;&quot;
+      vagrant provision
+    done
+  done
+done
+
+vagrant destroy -f</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -156,7 +233,15 @@ vagrant provision</command>
               <operator>OR</operator>
             </hudson.plugins.postbuildtask.LogProperties>
             <hudson.plugins.postbuildtask.LogProperties>
+              <logText>Broken pipe</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
               <logText>non-zero exit</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>build as failure</logText>
               <operator>OR</operator>
             </hudson.plugins.postbuildtask.LogProperties>
           </logTexts>
@@ -174,16 +259,15 @@ vagrant destroy -f</script>
       <info>
         <propertiesContent>VER_NAME=Lite
 SET_OPTS=&quot;VerboseInfo=1&quot;
-EA_OPTS=&quot;maxdrawdown_enable=1&quot;
-INI_OPTS=&quot;TestPeriod=M30,TestModel=0&quot;
+EA_OPTS=&quot;maxdrawdown_enable=1,maxdrawdown=${MaxDD}&quot;
+INI_OPTS=TestModel=${TestModel}
 BOOT_CODE=clean_ea
-SET_DIR=EA31337-${VER_NAME}-Sets/${Symbol}/${Profile:-default}/${Deposit}${Currency}/${Spread}-spread/${Digits}-digits/${Year}
-REPORT_NAME=${JOB_BASE_NAME}--${Symbol}-${Deposit}${Currency}-${Year}year-${Spread}spread-${BT_Source}-test
 CLONE_REPO=https://$GITHUB_API_TOKEN@github.com/EA31337-Tester/EA31337-${VER_NAME}-Sets
 RULES_INIT_PATH=&quot;_rules/Common/.init.rules.inc&quot;
-VM_NAME=$VM_NAME-${Symbol}-${Year}
+VM_NAME=${JOB_BASE_NAME}-${Symbol}-${Years}
 PUSH_REPO=1
-VOLUME_SIZE=20</propertiesContent>
+VOLUME_SIZE=20
+INSTANCE_TYPE=${InstanceType}</propertiesContent>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>
