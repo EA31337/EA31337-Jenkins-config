@@ -1,0 +1,284 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>30</daysToKeep>
+        <numToKeep>100</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.22.1">
+      <projectUrl>https://github.com/EA31337-Tester/EA31337-Lite-Sets/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.25">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@1.9.0">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <categories class="java.util.concurrent.CopyOnWriteArrayList"/>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+      <limitOneJobWithMatchingParams>false</limitOneJobWithMatchingParams>
+      <paramsToUseForLimit></paramsToUseForLimit>
+      <configVersion>1</configVersion>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+    <com.joelj.jenkins.eztemplates.TemplateImplementationProperty plugin="ez-templates@1.2.3">
+      <templateJobName>_Testing/Lite Optimization</templateJobName>
+      <syncMatrixAxis>true</syncMatrixAxis>
+      <syncDescription>false</syncDescription>
+      <syncBuildTriggers>true</syncBuildTriggers>
+      <syncDisabled>false</syncDisabled>
+      <syncSecurity>true</syncSecurity>
+      <syncScm>true</syncScm>
+      <syncOwnership>true</syncOwnership>
+      <syncAssignedLabel>true</syncAssignedLabel>
+      <exclusions>
+        <string>ez-templates</string>
+        <string>job-params</string>
+        <string>disabled</string>
+        <string>description</string>
+      </exclusions>
+    </com.joelj.jenkins.eztemplates.TemplateImplementationProperty>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions class="linked-list">
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Years</name>
+          <description>Year to backtest.</description>
+          <choices>
+            <string>2014-2015</string>
+            <string>2011-2015</string>
+            <string>2010,2011,2012,2013,2014,2015,2016</string>
+            <string>2016</string>
+            <string>2015</string>
+            <string>2014</string>
+            <string>2013</string>
+            <string>2012</string>
+            <string>2011</string>
+            <string>2010</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Months</name>
+          <description>Months to test.</description>
+          <choices>
+            <string>1-12</string>
+            <string>1,2,3,4,5,6,7,8,9,10,11,12</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Deposits</name>
+          <description>Account deposit to backtest.</description>
+          <choices>
+            <string>10000</string>
+            <string>2000</string>
+            <string>2000,10000</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Symbol</name>
+          <description>Symbol to backtest.</description>
+          <choices>
+            <string>EURUSD</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Spreads</name>
+          <description>Spread to backtest.</description>
+          <choices>
+            <string>40</string>
+            <string>20</string>
+            <string>10</string>
+            <string>10,20</string>
+            <string>10,20,40</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Digits</name>
+          <description>Number of market digits.</description>
+          <choices>
+            <string>5</string>
+            <string>4</string>
+            <string>2</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>BaseCurrency</name>
+          <description>Base currency of the account.</description>
+          <choices>
+            <string>USD</string>
+            <string>GBP</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>TestPeriod</name>
+          <description>Select period to test.</description>
+          <choices>
+            <string>M30</string>
+            <string>M15</string>
+            <string>M5</string>
+            <string>M1</string>
+            <string>H1</string>
+            <string>H4</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>BT_Source</name>
+          <description>Source of the tick data for backtesting.</description>
+          <choices>
+            <string>DS</string>
+            <string>DS2</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>InstanceType</name>
+          <description>Select an instance type. See: https://aws.amazon.com/ec2/instance-types/</description>
+          <choices>
+            <string>t2.small</string>
+            <string>t2.medium</string>
+            <string>t2.large</string>
+            <string>t2.xlarge</string>
+            <string>t2.2xlarge</string>
+            <string>t2.micro</string>
+            <string>t2.nano</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>MaxDD</name>
+          <description>The maximal drawdown to consider the test result (in %).</description>
+          <choices>
+            <string>50</string>
+            <string>80</string>
+            <string>90</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>TestModel</name>
+          <description>Model quality for the test. Use 0 for every tick, 1 for control points and 2 for open prices only.</description>
+          <choices>
+            <string>1</string>
+            <string>2</string>
+            <string>0</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.0.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/EA31337/FX-MT-VM</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/dev3</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!/usr/bin/env bash
+
+# Exports.
+export ASSET=&quot;EA31337 EA31337-Backtest-Releases $EA_VER $VER_NAME-Backtest ~/files/EA&quot;
+
+# Build.
+vagrant up --no-provision --destroy-on-error --provider=aws
+
+for year in ${Years//,/ }; do
+  for deposit in ${Deposits//,/ }; do
+    for spread in ${Spreads//,/ }; do
+      SET_DIR=EA31337-${VER_NAME}-Sets/${Symbol}/${Profile:-default}/${deposit}${BaseCurrency}/${spread}-spread/${Digits}-digits/${year}
+      REPORT_NAME=${JOB_BASE_NAME}--${Symbol}-${deposit}${BaseCurrency}-${year}year-${spread}spread-${BT_Source}-test
+      export RUN_TEST=&quot;-o -v -t -x -I $INI_OPTS -S $SET_OPTS -E $EA_OPTS -f \&quot;$SET_DIR\&quot;/*.set -e EA31337-$VER_NAME -c $BaseCurrency -p $Symbol -d $deposit -s $spread -y $year -m $Months -D $Digits -P $TestPeriod -b $BT_Source -M $MT4_VER -i */${RULES_INIT_PATH} -i \&quot;\$(find ~ -maxdepth 5 -name \*${TEST_NAME}.rule\* || echo FAILED)\&quot; -r \&quot;$REPORT_NAME\&quot; -O \&quot;$SET_DIR/$OPT_DIR\&quot;&quot;
+      vagrant provision
+    done
+  done
+done
+
+vagrant destroy -f</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.plugins.logparser.LogParserPublisher plugin="log-parser@2.0">
+      <unstableOnWarning>true</unstableOnWarning>
+      <failBuildOnError>true</failBuildOnError>
+      <showGraphs>true</showGraphs>
+      <parsingRulesPath>/var/lib/jenkins/conf/backtest.rules</parsingRulesPath>
+      <useProjectRule>false</useProjectRule>
+    </hudson.plugins.logparser.LogParserPublisher>
+    <hudson.plugins.postbuildtask.PostbuildTask plugin="postbuild-task@1.8">
+      <tasks>
+        <hudson.plugins.postbuildtask.TaskProperties>
+          <logTexts>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>ERROR</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>FAILURE</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>ConnectionTimeout</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>Broken pipe</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>non-zero exit</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>build as failure</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+          </logTexts>
+          <EscalateStatus>false</EscalateStatus>
+          <RunIfJobSuccessful>false</RunIfJobSuccessful>
+          <script>vagrant status&#xd;
+vagrant destroy -f</script>
+        </hudson.plugins.postbuildtask.TaskProperties>
+      </tasks>
+    </hudson.plugins.postbuildtask.PostbuildTask>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.8.7"/>
+    <EnvInjectBuildWrapper plugin="envinject@1.93.1">
+      <info>
+        <propertiesContent>VER_NAME=Lite
+SET_OPTS=&quot;VerboseInfo=1&quot;
+EA_OPTS=&quot;maxdrawdown_enable=1,maxdrawdown=${MaxDD}&quot;
+INI_OPTS=TestModel=${TestModel}
+BOOT_CODE=clean_ea
+CLONE_REPO=https://$GITHUB_API_TOKEN@github.com/EA31337-Tester/EA31337-${VER_NAME}-Sets
+RULES_INIT_PATH=&quot;_rules/Common/.init.rules.inc&quot;
+VM_NAME=${JOB_BASE_NAME}-${Symbol}-${Years}
+PUSH_REPO=1
+VOLUME_SIZE=20
+INSTANCE_TYPE=${InstanceType}</propertiesContent>
+        <loadFilesFromMaster>false</loadFilesFromMaster>
+      </info>
+    </EnvInjectBuildWrapper>
+  </buildWrappers>
+</project>
