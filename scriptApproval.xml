@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<scriptApproval plugin="script-security@1.24">
+  <approvedScriptHashes/>
+  <approvedSignatures/>
+  <aclApprovedSignatures/>
+  <approvedClasspathEntries/>
+  <pendingScripts>
+    <pendingScript>
+      <context/>
+      <script>// @NonCPS
+def printList(params) {
+    def jobs = [:]
+    println params
+    params.split(&quot;,&quot;).each { param -&gt;
+        println &quot;Param: ${param}&quot;
+    }
+}
+text = &quot;Foo,Bar,Baz,Qux&quot;
+printList(text)</script>
+      <language>groovy</language>
+    </pendingScript>
+    <pendingScript>
+      <context/>
+      <script>def buildJob(strategy, period) {
+    return build(job: &apos;Test Strategy&apos;, parameters: [string(name: &apos;Strategy&apos;, value: strategy), string(name: &apos;TestPeriod&apos;, value: period), string(name: &apos;Year&apos;, value: Year), string(name: &apos;Months&apos;, value: Months), string(name: &apos;Deposit&apos;, value: Deposit), string(name: &apos;Symbol&apos;, value: Symbol), string(name: &apos;Spread&apos;, value: Spread), string(name: &apos;Digits&apos;, value: Digits), string(name: &apos;BaseCurrency&apos;, value: BaseCurrency), string(name: &apos;BT_Source&apos;, value: BT_Source), string(name: &apos;Profile&apos;, value: Profile)], quietPeriod: 10)
+}
+@NonCPS
+def addJobs(params) {
+    def jobs = [:]
+    println params
+    params.split(&quot;\\r?\\n&quot;).each { param -&gt;
+        println &quot;Adding ${param}...&quot;
+        jobs[&quot;${param}&quot;] = { buildJob(&quot;${param}-${param}&quot;, &apos;M30&apos;) }
+        jobs[&quot;${param}1&quot;] = { buildJob(&quot;${param}-${param}1&quot;, &apos;M1&apos;) }
+        jobs[&quot;${param}5&quot;] = { buildJob(&quot;${param}-${param}5&quot;, &apos;M5&apos;) }
+        jobs[&quot;${param}15&quot;] = { buildJob(&quot;${param}-${param}15&quot;, &apos;M15&apos;) }
+        jobs[&quot;${param}30&quot;] = { buildJob(&quot;${param}-${param}30&quot;, &apos;M30&apos;) }
+    }
+    return jobs;
+}
+node {
+    stage(&apos;Tests&apos;) {
+        print &quot;Parameters: Year:${Year}, Months:${Months}, Deposit:${Deposit}, Symbol:${Symbol}, Spread:${Spread}, Digits:${Digits}, BaseCurrency:${BaseCurrency}, BT_Source:${BT_Source}, Profile:${Profile}&quot;
+        def testJobs = addJobs(Strategies)
+        parallel testJobs
+    }
+}</script>
+      <language>groovy</language>
+    </pendingScript>
+  </pendingScripts>
+  <pendingSignatures/>
+  <pendingClasspathEntries/>
+</scriptApproval>
