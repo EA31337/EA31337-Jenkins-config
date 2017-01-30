@@ -49,6 +49,9 @@ userContent/
 logs/
 *.log
 
+# Database binary files.
+*.db
+
 # Miscellaneous litter
 *.tmp
 *.old
