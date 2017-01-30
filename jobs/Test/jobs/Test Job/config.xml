@@ -17,11 +17,24 @@
         <hudson.model.TextParameterDefinition>
           <name>Years</name>
           <description></description>
-          <defaultValue>2015
+          <defaultValue>2016
+2015
 2014
 2013
 2012</defaultValue>
         </hudson.model.TextParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>Spread</name>
+          <description></description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>40,20,10</string>
+              <string>20,10</string>
+              <string>20</string>
+              <string>10</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@1.9.0">
@@ -65,7 +78,11 @@
 #vagrant provision</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command></command>
+      <command>#!/usr/bin/env bash -e
+
+for spread in ${Spread//,/ }; do
+  echo $spread
+done</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>

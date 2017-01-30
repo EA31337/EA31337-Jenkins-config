@@ -51,7 +51,7 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
-  <concurrentBuild>false</concurrentBuild>
+  <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
       <command>vagrant up --no-provision --destroy-on-error --provider=aws
@@ -84,6 +84,10 @@ times</command>
               <operator>OR</operator>
             </hudson.plugins.postbuildtask.LogProperties>
             <hudson.plugins.postbuildtask.LogProperties>
+              <logText>Broken pipe</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
               <logText>non-zero exit</logText>
               <operator>OR</operator>
             </hudson.plugins.postbuildtask.LogProperties>
@@ -102,5 +106,15 @@ vagrant destroy -f</script>
   </publishers>
   <buildWrappers>
     <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.8.7"/>
+    <EnvInjectBuildWrapper plugin="envinject@1.93.1">
+      <info>
+        <propertiesContent>AMI=ami-fce3c696
+VM_NAME=${JOB_BASE_NAME}-${BUILD_NUMBER}
+#VAGRANT_LOG=debug</propertiesContent>
+        <scriptContent>unset AMI
+unset PUSH_REPO</scriptContent>
+        <loadFilesFromMaster>false</loadFilesFromMaster>
+      </info>
+    </EnvInjectBuildWrapper>
   </buildWrappers>
 </project>

@@ -51,7 +51,7 @@
       <parameterDefinitions class="linked-list">
         <hudson.model.ChoiceParameterDefinition>
           <name>Years</name>
-          <description>Year to backtest.</description>
+          <description>Year(s) to backtest.</description>
           <choices>
             <string>2014-2015</string>
             <string>2011-2015</string>
@@ -67,15 +67,27 @@
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>Months</name>
-          <description>Months to test.</description>
+          <description>Month(s) to test.</description>
           <choices>
             <string>1-12</string>
             <string>1,2,3,4,5,6,7,8,9,10,11,12</string>
+            <string>1</string>
+            <string>2</string>
+            <string>3</string>
+            <string>4</string>
+            <string>5</string>
+            <string>6</string>
+            <string>7</string>
+            <string>8</string>
+            <string>9</string>
+            <string>10</string>
+            <string>11</string>
+            <string>12</string>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>Deposits</name>
-          <description>Account deposit to backtest.</description>
+          <description>Account deposit(s) to backtest.</description>
           <choices>
             <string>10000</string>
             <string>2000</string>
@@ -91,11 +103,11 @@
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>Spreads</name>
-          <description>Spread to backtest.</description>
+          <description>Spread(s) to backtest.</description>
           <choices>
-            <string>40</string>
             <string>20</string>
             <string>10</string>
+            <string>40</string>
             <string>10,20</string>
             <string>10,20,40</string>
           </choices>
@@ -141,8 +153,8 @@
           <name>InstanceType</name>
           <description>Select an instance type. See: https://aws.amazon.com/ec2/instance-types/</description>
           <choices>
-            <string>t2.small</string>
             <string>t2.medium</string>
+            <string>t2.small</string>
             <string>t2.large</string>
             <string>t2.xlarge</string>
             <string>t2.2xlarge</string>
@@ -157,6 +169,7 @@
             <string>50</string>
             <string>80</string>
             <string>90</string>
+            <string>30</string>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
@@ -165,6 +178,14 @@
           <choices>
             <string>1</string>
             <string>2</string>
+            <string>0</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>TerminateInstance</name>
+          <description>If 1, terminate instance after run. Otherwise leave it.</description>
+          <choices>
+            <string>1</string>
             <string>0</string>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
@@ -208,13 +229,13 @@ for year in ${Years//,/ }; do
     for spread in ${Spreads//,/ }; do
       SET_DIR=EA31337-${VER_NAME}-Sets/${Symbol}/${Profile:-default}/${deposit}${BaseCurrency}/${spread}-spread/${Digits}-digits/${year}
       REPORT_NAME=${JOB_BASE_NAME}--${Symbol}-${deposit}${BaseCurrency}-${year}year-${spread}spread-${BT_Source}-test
-      export RUN_TEST=&quot;-o -v -t -x -I $INI_OPTS -S $SET_OPTS -E $EA_OPTS -f \&quot;$SET_DIR\&quot;/*.set -e EA31337-$VER_NAME -c $BaseCurrency -p $Symbol -d $deposit -s $spread -y $year -m $Months -D $Digits -P $TestPeriod -b $BT_Source -M $MT4_VER -i */${RULES_INIT_PATH} -i \&quot;\$(find ~ -maxdepth 5 -name \*${TEST_NAME}.rule\* || echo FAILED)\&quot; -r \&quot;$REPORT_NAME\&quot; -O \&quot;$SET_DIR/$OPT_DIR\&quot;&quot;
+      export RUN_TEST=&quot;-x -o -t -v -I $INI_OPTS -S $SET_OPTS -E $EA_OPTS -f \&quot;$SET_DIR\&quot;/*.set -e EA31337-$VER_NAME -c $BaseCurrency -p $Symbol -d $deposit -s $spread -y $year -m $Months -D $Digits -P $TestPeriod -b $BT_Source -M $MT4_VER -i */${RULES_INIT_PATH} -i \&quot;\$(find ~ -maxdepth 5 -name \*${TEST_NAME}.rule\* || echo FAILED)\&quot; -r \&quot;$REPORT_NAME\&quot; -O \&quot;$SET_DIR/$OPT_DIR\&quot;&quot;
       vagrant provision
     done
   done
 done
 
-vagrant destroy -f</command>
+[ &quot;$TerminateInstance&quot; -gt 0 ] &amp;&amp; vagrant destroy -f</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -253,6 +274,10 @@ vagrant destroy -f</command>
               <logText>build as failure</logText>
               <operator>OR</operator>
             </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>Build was aborted</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
@@ -267,16 +292,17 @@ vagrant destroy -f</script>
     <EnvInjectBuildWrapper plugin="envinject@1.93.1">
       <info>
         <propertiesContent>VER_NAME=Lite
-SET_OPTS=&quot;VerboseInfo=1&quot;
+SET_OPTS=&quot;ValidateSettings=0,WriteReport=0,PrintLogOnChart=0,VerboseErrors=0,VerboseInfo=0,VerboseDebug=0,VerboseTrace=0,RecordTicksToCSV=0&quot;
 EA_OPTS=&quot;maxdrawdown_enable=1,maxdrawdown=${MaxDD}&quot;
 INI_OPTS=TestModel=${TestModel}
 BOOT_CODE=clean_ea
 CLONE_REPO=https://$GITHUB_API_TOKEN@github.com/EA31337-Tester/EA31337-${VER_NAME}-Sets
 RULES_INIT_PATH=&quot;_rules/Common/.init.rules.inc&quot;
-VM_NAME=${JOB_BASE_NAME}-${Symbol}-${Years}
+VM_NAME=${JOB_BASE_NAME}-${Symbol}-${TestModel}-${Years}
 PUSH_REPO=1
 VOLUME_SIZE=20
-INSTANCE_TYPE=${InstanceType}</propertiesContent>
+INSTANCE_TYPE=${InstanceType}
+TERMINATE=${TerminateInstance}</propertiesContent>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>

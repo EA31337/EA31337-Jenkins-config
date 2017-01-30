@@ -2,7 +2,7 @@
 <hudson>
   <disabledAdministrativeMonitors/>
   <version>2.7.1</version>
-  <numExecutors>30</numExecutors>
+  <numExecutors>40</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
   <authorizationStrategy class="com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy">
@@ -307,13 +307,13 @@
           <default>
             <comparator class="hudson.util.CaseInsensitiveComparator"/>
           </default>
-          <int>18</int>
+          <int>17</int>
           <string>AMI</string>
           <string>ami-a1e5ddb6</string>
           <string>ASSET_OVERRIDE</string>
           <string>1</string>
           <string>EA_VER</string>
-          <string>v1.072</string>
+          <string>v1.073</string>
           <string>GIT_ARGS</string>
           <string>--author=&quot;EA31337-Tester &lt;EA31337-Tester@users.noreply.github.com&gt;&quot;</string>
           <string>GITHUB_API_TOKEN</string>
@@ -326,8 +326,6 @@
           <string>4.0.0.1010</string>
           <string>OPT_DIR</string>
           <string>_optimization_results</string>
-          <string>POWER_OFF</string>
-          <string>1</string>
           <string>PRIVATE_KEY</string>
           <string>${HOME}/secrets/EA31337-Tester.pem</string>
           <string>PROVIDER</string>

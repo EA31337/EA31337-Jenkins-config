@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<com.cloudbees.hudson.plugins.folder.Folder plugin="cloudbees-folder@5.12">
+<com.cloudbees.hudson.plugins.folder.Folder plugin="cloudbees-folder@5.13">
   <actions/>
   <description></description>
   <properties/>

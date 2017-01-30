@@ -50,11 +50,12 @@
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions class="linked-list">
         <hudson.model.ChoiceParameterDefinition>
-          <name>Year</name>
+          <name>Years</name>
           <description>Year to backtest.</description>
           <choices>
             <string>2014-2015</string>
             <string>2011-2015</string>
+            <string>2010,2011,2012,2013,2014,2015,2016</string>
             <string>2016</string>
             <string>2015</string>
             <string>2014</string>
@@ -62,9 +63,6 @@
             <string>2012</string>
             <string>2011</string>
             <string>2010</string>
-            <string>2009</string>
-            <string>2008</string>
-            <string>2007</string>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.StringParameterDefinition>
@@ -73,11 +71,12 @@
           <defaultValue>1-12</defaultValue>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
-          <name>Deposit</name>
+          <name>Deposits</name>
           <description>Account deposit to backtest.</description>
           <choices>
-            <string>2000</string>
             <string>10000</string>
+            <string>2000</string>
+            <string>2000,10000</string>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
@@ -89,11 +88,14 @@
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
-          <name>Spread</name>
+          <name>Spreads</name>
           <description>Spread to backtest.</description>
           <choices>
-            <string>10</string>
             <string>20</string>
+            <string>10</string>
+            <string>40</string>
+            <string>10,20</string>
+            <string>10,20,40</string>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
@@ -141,6 +143,44 @@
             <string>default</string>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>TestModel</name>
+          <description>Model quality for the test. Use 0 for every tick, 1 for control points and 2 for open prices only.</description>
+          <choices>
+            <string>0</string>
+            <string>1</string>
+            <string>2</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>SetDir</name>
+          <description></description>
+          <choices>
+            <string>default</string>
+            <string>EURUSD/default/10000USD/20-spread/5-digits/2014-2015</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>InstanceType</name>
+          <description>Select an instance type. See: https://aws.amazon.com/ec2/instance-types/</description>
+          <choices>
+            <string>t2.small</string>
+            <string>t2.medium</string>
+            <string>t2.large</string>
+            <string>t2.xlarge</string>
+            <string>t2.2xlarge</string>
+            <string>t2.micro</string>
+            <string>t2.nano</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>TerminateInstance</name>
+          <description>If 1, terminate instance after run. Otherwise leave it.</description>
+          <choices>
+            <string>1</string>
+            <string>0</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
   </properties>
@@ -153,7 +193,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>*/dev</name>
+        <name>*/dev3</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -175,25 +215,35 @@ cat &gt; init_test.sh &lt;&lt;_EOF
 echo &quot;Loading settings...&quot;
 CURRENCY=$BaseCurrency
 SYMBOL=$Symbol
-DEPOSIT=$Deposit
-SPREAD=$Spread
 DIGITS=$Digits
-MONTHS=$Months
-YEARS=$Year
+PERIOD=$TestPeriod
 BT_SRC=$BT_Source
 _EOF</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>#!/bin/bash -xe
+      <command>#!/usr/bin/env bash -xe
+
 # Exports.
 export ASSET=&quot;EA31337 EA31337-Backtest-Releases $EA_VER $VER_NAME-Backtest ~/files/EA&quot;
-export RUN_TEST=&quot;-t -v -G -x -I $INI_OPTS -S $SET_OPTS -E $EA_OPTS -e EA31337-$VER_NAME -M $MT4_VER -B &apos;${INIT_SCRIPT}&apos; -f &apos;$BASE_REPO/$SET_DIR&apos;/*.set -r &apos;$REPORT_NAME&apos; -O &apos;$BASE_REPO/$SET_DIR/$SUBDIR&apos;&quot;
 #unset POWER_OFF
 #unset TERMINATE
 
 # Build.
 vagrant up --no-provision --destroy-on-error --provider=aws
-vagrant provision</command>
+
+for year in ${Years//,/ }; do
+  for deposit in ${Deposits//,/ }; do
+    for spread in ${Spreads//,/ }; do
+      OUT_DIR=${Symbol}/${Profile}/${deposit}${BaseCurrency}/${spread}-spread/${Digits}-digits/${year}
+      SET_DIR=$OUT_DIR &amp;&amp; [ &quot;$SetDir&quot; != &quot;default&quot; ] &amp;&amp; SET_DIR=$SetDir
+      REPORT_NAME=${Symbol}-${deposit}${BaseCurrency}-${year}year-${spread}spread-${TestPeriod}-${BT_Source}-test
+      export RUN_TEST=&quot;-t -v -G -x -d $deposit -s $spread -y $year -m $Months -I $INI_OPTS -S $SET_OPTS -E $EA_OPTS -e EA31337-$VER_NAME -M $MT4_VER -B &apos;${INIT_SCRIPT}&apos; -f &apos;$BASE_REPO/$SET_DIR&apos;/*.set -r &apos;$REPORT_NAME&apos; -O &apos;$BASE_REPO/$OUT_DIR/$SUBDIR&apos;&quot;
+      vagrant provision
+    done
+  done
+done
+
+vagrant destroy -f</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -221,7 +271,15 @@ vagrant provision</command>
               <operator>OR</operator>
             </hudson.plugins.postbuildtask.LogProperties>
             <hudson.plugins.postbuildtask.LogProperties>
+              <logText>Broken pipe</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
               <logText>non-zero exit</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>rsync error</logText>
               <operator>OR</operator>
             </hudson.plugins.postbuildtask.LogProperties>
           </logTexts>
@@ -240,10 +298,8 @@ vagrant destroy -f</script>
         <propertiesContent>VER_NAME=Lite
 SET_OPTS=&quot;VerboseInfo=1,ValidateSettings=0&quot;
 EA_OPTS=maxdrawdown_enable=0
-INI_OPTS=TestPeriod=${TestPeriod},TestModel=0
-SET_DIR=${Symbol}/${Profile}/${Deposit}${BaseCurrency}/${Spread}-spread/${Digits}-digits/${Year}
-REPORT_NAME=${Symbol}-${Deposit}${BaseCurrency}-${Year}year-${Spread}spread-${TestPeriod}-${BT_Source}-test
-VM_NAME=${REPORT_NAME}
+INI_OPTS=TestModel=${TestModel}
+VM_NAME=${Symbol}-${Deposits}${BaseCurrency}-${Years}year-${Spreads}spread-${TestPeriod}-${BT_Source}-${TestModel}-test
 BASE_REPO=EA31337-Lite-Sets
 CLONE_REPO=https://$GITHUB_API_TOKEN@github.com/EA31337-Tester/EA31337-${VER_NAME}-Sets
 INIT_SCRIPT=/vagrant/init_test.sh
@@ -251,7 +307,9 @@ SUBDIR=_test_results
 GIF_ENHANCE=&apos;-n -cbg #031634 -cvl RoyalBlue3 -cbl #96feff -cgr NavyBlue -ctx #3bffff&apos;
 GIF_TEXT_COLOR=RoyalBlue
 PUSH_REPO=1
-VOLUME_SIZE=40</propertiesContent>
+VOLUME_SIZE=20
+INSTANCE_TYPE=${InstanceType}
+TERMINATE=${TerminateInstance}</propertiesContent>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>

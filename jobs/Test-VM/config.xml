@@ -51,10 +51,10 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
-  <concurrentBuild>false</concurrentBuild>
+  <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>vagrant up --no-provision --destroy-on-error --provider=aws
+      <command>vagrant up --no-provision --provider=aws # --destroy-on-error
 vagrant provision
 vagrant destroy -f
 times</command>
@@ -105,8 +105,14 @@ vagrant destroy -f</script>
     <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.8.7"/>
     <EnvInjectBuildWrapper plugin="envinject@1.93.1">
       <info>
-        <propertiesContent>CLONE_REPO=https://github.com/EA31337-Tester/EA31337-Lite-Sets</propertiesContent>
-        <scriptContent>unset PUSH_REPO</scriptContent>
+        <propertiesContent>AMI=ami-fce3c696
+CLONE_REPO=https://github.com/EA31337-Tester/EA31337-Lite-Sets
+VM_NAME=${JOB_BASE_NAME}-${BUILD_NUMBER}
+#VAGRANT_LOG=debug</propertiesContent>
+        <scriptContent>unset AMI
+unset PUSH_REPO
+#unset TERMINATE
+#unset POWER_OFF</scriptContent>
         <loadFilesFromMaster>false</loadFilesFromMaster>
       </info>
     </EnvInjectBuildWrapper>

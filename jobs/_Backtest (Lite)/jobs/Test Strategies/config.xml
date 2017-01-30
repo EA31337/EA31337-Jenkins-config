@@ -29,6 +29,9 @@ WPR</defaultValue>
           <description>Year to backtest.</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
+              <string>2014-2015</string>
+              <string>2011-2015</string>
+              <string>2016</string>
               <string>2015</string>
               <string>2014</string>
               <string>2013</string>
@@ -67,8 +70,9 @@ WPR</defaultValue>
           <description>Spread to backtest.</description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
-              <string>10</string>
+              <string>40</string>
               <string>20</string>
+              <string>10</string>
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
@@ -136,7 +140,7 @@ def addJobs(params) {
     println params
     params.split(&quot;\\r?\\n&quot;).each { param -&gt;
         println &quot;Adding ${param}...&quot;
-        jobs[&quot;${param}&quot;] = { buildJob(&quot;${param}-${param}&quot;, &apos;M15&apos;) }
+        jobs[&quot;${param}&quot;] = { buildJob(&quot;${param}-${param}&quot;, &apos;M30&apos;) }
         jobs[&quot;${param}1&quot;] = { buildJob(&quot;${param}-${param}1&quot;, &apos;M1&apos;) }
         jobs[&quot;${param}5&quot;] = { buildJob(&quot;${param}-${param}5&quot;, &apos;M5&apos;) }
         jobs[&quot;${param}15&quot;] = { buildJob(&quot;${param}-${param}15&quot;, &apos;M15&apos;) }

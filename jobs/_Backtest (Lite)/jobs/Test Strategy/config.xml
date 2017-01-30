@@ -318,7 +318,7 @@
 # Exports.
 export ASSET=&quot;EA31337 EA31337-Backtest-Releases $EA_VER $VER_NAME-Backtest ~/files/EA&quot;
 export CLONE_REPO=https://$GITHUB_API_TOKEN@github.com/EA31337-Tester/EA31337-${VER_NAME}-Sets
-export RUN_TEST=&quot;-t -v -x -I $INI_OPTS -c $BaseCurrency -p $Symbol -d $Deposit -s $Spread -y $Year -m $Months -D $Digits -b $BT_Source -e EA31337-$VER_NAME -S $SET_OPTS -E $EA_OPTS -f */&apos;$BASE_DIR&apos;/*.set -M $MT4_VER -i &apos;$BASE_REPO/$RULES_INIT_PATH&apos; -i \&quot;\$(find ~ -name Strategy-${Strategy}.test.rule -maxdepth 5 || echo FAILED)\&quot; -r &apos;$REPORT_NAME&apos; -O &apos;$BASE_REPO/$BASE_DIR/$SUBDIR&apos;&quot;
+export RUN_TEST=&quot;-t -v -x -I $INI_OPTS -c $BaseCurrency -p $Symbol -d $Deposit -s $Spread -y $Year -m $Months -D $Digits -b $BT_Source -e EA31337-$VER_NAME -S $SET_OPTS -E $EA_OPTS -f */&apos;$BASE_DIR&apos;/*.set -M $MT4_VER -i &apos;$BASE_REPO/$RULES_INIT_PATH&apos; -i \&quot;\$(find ~ -maxdepth 5 -name Strategy-${Strategy}.test.rule || echo FAILED)\&quot; -r &apos;$REPORT_NAME&apos; -O &apos;$BASE_REPO/$BASE_DIR/$SUBDIR&apos;&quot;
 
 # Build.
 vagrant up --no-provision --destroy-on-error --provider=aws
@@ -347,6 +347,14 @@ vagrant provision</command>
             </hudson.plugins.postbuildtask.LogProperties>
             <hudson.plugins.postbuildtask.LogProperties>
               <logText>ConnectionTimeout</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>Broken pipe</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>non-zero exit</logText>
               <operator>OR</operator>
             </hudson.plugins.postbuildtask.LogProperties>
           </logTexts>
